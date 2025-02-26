@@ -7,7 +7,7 @@ import { Test3Controller } from './test3/test3.controller';
 import { CatsController } from './cats/cats.controller'
 import { Test1Controller } from './test1/test1.controller'
 import { CatsService } from './cats/cats.service';
-import { LoggerMiddleware } from './common/middleware/logger.middleware'
+import { logger } from './common/middleware/logger.middleware'
 
 // 使用@Module装饰器定义模块
 @Module({
@@ -22,7 +22,9 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware'
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     // consumer.apply(LoggerMiddleware).forRoutes({ path: 'cats', method: RequestMethod.GET })
-    consumer.apply(LoggerMiddleware).forRoutes(Test1Controller)
-    consumer.apply(LoggerMiddleware).forRoutes(CatsController)
+    // consumer
+    //   .apply(logger)
+    //   .exclude({ path: 'cats', method: RequestMethod.GET })
+    //   .forRoutes(Test1Controller, CatsController)
   }
 }

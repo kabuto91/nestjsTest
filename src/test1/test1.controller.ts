@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { Test1Service } from './test1.service';
 import { CreateTest1Dto } from './dto/create-test1.dto';
 import { UpdateTest1Dto } from './dto/update-test1.dto';
+import { ForbiddenException } from 'src/exception/forbidden.exception';
 
 @Controller('test1')
 export class Test1Controller {
@@ -15,7 +16,12 @@ export class Test1Controller {
 
   @Get()
   findAll() {
-    return this.test1Service.findAll();
+    const list = this.test1Service.findAll();
+    if (list.length) {
+      return list
+    }
+    throw new ForbiddenException()
+    // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN)
   }
 
   @Get(':id')
