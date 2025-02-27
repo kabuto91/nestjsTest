@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { logger } from './common/middleware/logger.middleware';
+import { HttpExceptionFilter } from './exception/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -46,6 +47,8 @@ async function bootstrap() {
   );
 
   app.use(logger)
+
+  app.useGlobalFilters(new HttpExceptionFilter())
 
   await app.listen(3000);
 }

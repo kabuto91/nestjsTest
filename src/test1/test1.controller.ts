@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
 import { Test1Service } from './test1.service';
 import { CreateTest1Dto } from './dto/create-test1.dto';
 import { UpdateTest1Dto } from './dto/update-test1.dto';
 import { ForbiddenException } from 'src/exception/forbidden.exception';
+import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 
 @Controller('test1')
+// @UseFilters(new HttpExceptionFilter())
 export class Test1Controller {
   constructor(private readonly test1Service: Test1Service) {}
 
@@ -15,6 +17,7 @@ export class Test1Controller {
   }
 
   @Get()
+  
   findAll() {
     const list = this.test1Service.findAll();
     if (list.length) {
