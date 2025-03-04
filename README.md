@@ -63,3 +63,22 @@ Nest 带有一个内置的异常层，负责处理应用中所有未处理的异
 * ServiceUnavailableException
 * GatewayTimeoutException
 * PreconditionFailedException
+
+### 管道
+管道是一个带有 @Injectable() 装饰器的类，它实现了 PipeTransform 接口。管道有两个主要用途：
+* 转换输入数据（例如，从字符串转换为整数）
+* 对输入数据应用验证规则（例如，验证字符串是否为电子邮件）
+
+#### 内置管道
+
+Nest 附带几个开箱即用的管道：
+* ValidationPipe
+* ParseIntPipe
+* ParseBoolPipe
+* ParseArrayPipe
+* ParseUUIDPipe
+* ParseEnumPipe
+* DefaultValuePipe
+* ParseFilePipe
+* ParseDatePipe
+
