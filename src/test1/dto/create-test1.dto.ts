@@ -1,10 +1,12 @@
-import { IsString, IsNotEmpty, IsNumber } from 'class-validator'
 
-export class CreateTest1Dto {
-	@IsNotEmpty({ message: '字段内容不能为空' })
-	@IsString({ message: 'id字段需为String类型' })
-	id: string
+import { z } from 'zod';
 
-	@IsNotEmpty({ message: '字段内容不能为空' })
-	age: number
-}
+export const createCatSchema = z
+  .object({
+    name: z.string(),
+    age: z.number(),
+    breed: z.string(),
+  })
+  .required();
+
+export type CreateTest1Dto = z.infer<typeof createCatSchema>;

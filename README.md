@@ -82,3 +82,13 @@ Nest 附带几个开箱即用的管道：
 * ParseFilePipe
 * ParseDatePipe
 
+#### 自定义管道
+每个管道都必须实现 transform() 方法来履行 PipeTransform 接口契约。这个方法有两个参数：
+
+* value
+* metadata
+
+value 参数是当前处理的方法参数（在被路由处理方法接收之前），metadata 是当前处理的方法参数的元数据。元数据对象具有以下属性：
+* type:	指示参数是主体 @Body()、查询 @Query()、参数 @Param() 还是自定义参数（了解更多 此处）。
+* metatype:	提供参数的元类型，例如 String。注意：如果你在路由处理程序方法签名中省略类型声明或使用普通 JavaScript，则该值为 undefined。
+* data:	传递给装饰器的字符串，例如 @Body('string')。如果将装饰器括号留空，则为 undefined。
