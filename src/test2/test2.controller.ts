@@ -3,6 +3,7 @@ import { Test2Service } from './test2.service';
 import { Test1Service } from '../test1/test1.service'
 import { CreateTest2Dto } from './dto/create-test2.dto';
 import { UpdateTest2Dto } from './dto/update-test2.dto';
+import { ValidationPipe } from 'src/validation/validation1.pipe';
 
 @Controller('test2')
 export class Test2Controller {
@@ -12,7 +13,7 @@ export class Test2Controller {
   ) {}
 
   @Post()
-  create(@Body() createTest2Dto: CreateTest2Dto) {
+  create(@Body(new ValidationPipe()) createTest2Dto: CreateTest2Dto) {
     return this.test2Service.create(createTest2Dto);
   }
 
