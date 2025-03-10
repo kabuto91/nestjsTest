@@ -1,12 +1,15 @@
-import { Controller, ParseIntPipe, UsePipes, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
+import { Controller, UsePipes, UseGuards, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
 import { Test1Service } from './test1.service';
 import { CreateTest1Dto, createCatSchema  } from './dto/create-test1.dto';
 import { UpdateTest1Dto } from './dto/update-test1.dto';
 import { ForbiddenException } from 'src/exception/forbidden.exception';
 import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 import { ZodValidationPipe } from 'src/validation/validation.pipe';
+import { ParseIntPipe } from'src/validation/parse-int.pipe';
+import { RolesGuard } from 'src/common/guard/roles.guard';
 
 @Controller('test1')
+@UseGuards(RolesGuard)
 // @UseFilters(new HttpExceptionFilter())
 export class Test1Controller {
   constructor(private readonly test1Service: Test1Service) {}
@@ -30,7 +33,7 @@ export class Test1Controller {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: string) {
+  findOne(@Param('id', new ParseIntPipe()) id: string) {
     return this.test1Service.findOne(+id);
   }
 
