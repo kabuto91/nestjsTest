@@ -1,4 +1,4 @@
-import { Controller, UsePipes, UseGuards, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
+import { Controller, UsePipes, UseGuards, UseInterceptors, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
 import { Test1Service } from './test1.service';
 import { CreateTest1Dto, createCatSchema  } from './dto/create-test1.dto';
 import { UpdateTest1Dto } from './dto/update-test1.dto';
@@ -7,9 +7,12 @@ import { HttpExceptionFilter } from 'src/exception/http-exception.filter';
 import { ZodValidationPipe } from 'src/validation/validation.pipe';
 import { ParseIntPipe } from'src/validation/parse-int.pipe';
 import { RolesGuard } from 'src/common/guard/roles.guard';
+import { LoggingInterceptor } from 'src/interceptor/logging.interceptor'
+
 
 @Controller('test1')
 @UseGuards(RolesGuard)
+@UseInterceptors(LoggingInterceptor)
 // @UseFilters(new HttpExceptionFilter())
 export class Test1Controller {
   constructor(private readonly test1Service: Test1Service) {}
