@@ -8,6 +8,8 @@ import { ZodValidationPipe } from 'src/validation/validation.pipe';
 import { ParseIntPipe } from'src/validation/parse-int.pipe';
 import { RolesGuard } from 'src/common/guard/roles.guard';
 import { LoggingInterceptor } from 'src/interceptor/logging.interceptor'
+import { User } from 'src/decorator/user.decorator'
+import { Auth } from 'src/decorator/auth.decorator'
 
 
 @Controller('test1')
@@ -25,7 +27,7 @@ export class Test1Controller {
   }
 
   @Get()
-  
+  @Auth('admin')
   findAll() {
     const list = this.test1Service.findAll();
     if (list.length) {
@@ -36,7 +38,11 @@ export class Test1Controller {
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseIntPipe()) id: string) {
+  findOne(
+    @Param('id', new ParseIntPipe()) id: string,
+    @User() user
+  ) {
+    console.log('user', user)
     return this.test1Service.findOne(+id);
   }
 
